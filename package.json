@@ -1,0 +1,23 @@
+{
+  "name": "node_study",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zeroaan/node_study.git"
+  },
+  "author": "zeroaan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zeroaan/node_study/issues"
+  },
+  "homepage": "https://github.com/zeroaan/node_study#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
