@@ -1,9 +1,14 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 const LandingPage = (props) => {
+  const [loginState, setLoginState] = useState(false);
+
   useEffect(() => {
-    axios.get("/api/hello").then((response) => console.log(response));
+    axios.get("/api/users/auth").then((response) => {
+      setLoginState(response.data.isAuth);
+    });
   }, []);
 
   const onClick = () => {
@@ -28,7 +33,21 @@ const LandingPage = (props) => {
         }}
       >
         <h2>시작 페이지</h2>
-        <button onClick={onClick}>로그아웃</button>
+
+        {loginState ? (
+          <>
+            <button onClick={onClick}>로그아웃</button>
+          </>
+        ) : (
+          <>
+            <Link to="/login">
+              <button>로그인</button>
+            </Link>
+            <Link to="/register">
+              <button>회원가입</button>
+            </Link>
+          </>
+        )}
       </div>
     </>
   );
