@@ -67,7 +67,7 @@ app.post("/api/users/login", (req, res) => {
         res
           .cookie("userInfo", userInfo.token)
           .status(200)
-          .json({ loginSuccess: true, userID: userInfo._id });
+          .json({ loginSuccess: true, userID: userInfo._id, userInfo });
       });
     });
   });

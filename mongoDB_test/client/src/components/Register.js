@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import * as actions from "../store/actions/user_action";
 import "./Register.css";
 
-const Register = () => {
+const Register = (props) => {
+  const dispatch = useDispatch();
+
   const [myName, setMyName] = useState("");
   const [myEmail, setMyEmail] = useState("");
   const [myPassword, setMyPassword] = useState("");
@@ -22,8 +26,22 @@ const Register = () => {
   const onSubmitForm = (e) => {
     e.preventDefault();
     if (myPassword !== myRePassword) {
+      setMyPassword("");
+      setMyRePassword("");
       return alert("비밀번호를 다시 확인해주세요.");
     }
+    const body = {
+      name: myName,
+      email: myEmail,
+      password: myPassword,
+    };
+    dispatch(actions.registerUser(body)).then((response) => {
+      if (response.payload.success) {
+        props.history.push("/login");
+      } else {
+        alert("회원가입 실패");
+      }
+    });
   };
 
   return (
