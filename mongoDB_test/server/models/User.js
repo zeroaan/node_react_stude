@@ -22,6 +22,10 @@ const userSchema = mongoose.Schema({
   token: {
     type: String,
   },
+  role: {
+    type: Number,
+    default: 0,
+  },
 });
 
 userSchema.pre("save", function (next) {

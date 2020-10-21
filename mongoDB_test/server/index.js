@@ -80,6 +80,7 @@ app.get("/api/users/auth", auth, (req, res) => {
     name: req.user.name,
     email: req.user.email,
     isAuth: true,
+    isAdmin: req.user.role === 0 ? false : true,
   });
 });
 
@@ -98,5 +99,5 @@ app.get("/api/users/logout", auth, (req, res) => {
   );
 });
 
-const port = 3001;
+const port = 5000;
 app.listen(port, () => console.log(`Example app listening on port ${port}`));

@@ -21,3 +21,14 @@ export function loginUser(body) {
     payload: request,
   };
 }
+
+export function auth() {
+  const request = axios
+    .get("/api/users/auth")
+    .then((response) => response.data);
+
+  return {
+    type: types.AUTH_USER,
+    payload: request,
+  };
+}

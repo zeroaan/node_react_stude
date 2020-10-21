@@ -13,5 +13,6 @@ const render = () => {
   );
 };
 
-store.subscribe(render);
+// hoc auth를 사용하려면 subscribe 사용 X
+// store.subscribe(render);
 render();

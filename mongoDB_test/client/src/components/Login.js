@@ -16,7 +16,6 @@ const Login = (props) => {
       setMyPassword(value);
     }
   };
-
   const onSubmitForm = (e) => {
     e.preventDefault();
     const body = {
