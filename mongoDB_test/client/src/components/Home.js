@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import * as actions from "../store/actions/post_action";
@@ -7,6 +7,7 @@ const Home = (props) => {
   const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
+  const [posts, setPosts] = useState([]);
 
   const user = useSelector((state) => state.user.userData);
 
@@ -24,8 +25,8 @@ const Home = (props) => {
     const body = {
       title: title,
       desc: desc,
-      name: user.name,
-      id: user._id,
+      auth: user.name,
+      authId: user._id,
     };
     dispatch(actions.addPost(body)).then((response) => {
       if (response.payload.postSuccess) {
@@ -44,6 +45,14 @@ const Home = (props) => {
       setDesc(value);
     }
   };
+  useEffect(() => {
+    axios
+      .get("/api/posts")
+      .then((response) => response.data)
+      .then((result) => {
+        setPosts(result.posts);
+      });
+  }, []);
 
   return (
     <>
@@ -62,6 +71,15 @@ const Home = (props) => {
         <input type="text" name="desc" value={desc} onChange={onchangeInput} />
         <input type="submit" value="쓰기" />
       </form>
+
+      {posts.map((post, index) => (
+        <div key={index}>
+          <h2>{post.title}</h2>
+          <h4>{post.desc}</h4>
+          <h5>{post.auth}</h5>
+          <hr />
+        </div>
+      ))}
     </>
   );
 };

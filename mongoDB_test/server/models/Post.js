@@ -7,6 +7,12 @@ const postSchema = mongoose.Schema({
   desc: {
     type: String,
   },
+  auth: {
+    type: String,
+  },
+  authId: {
+    type: String,
+  },
 });
 
 const Post = mongoose.model("Post", postSchema);

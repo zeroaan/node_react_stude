@@ -111,6 +111,16 @@ app.post("/api/posts/post", (req, res) => {
     });
   });
 });
+app.get("/api/posts", (req, res) => {
+  Post.find(function (err, posts) {
+    if (err) {
+      return res.json({ postSuccess: false, err });
+    }
+    return res.status(200).json({
+      posts,
+    });
+  });
+});
 
 const port = 5000;
 app.listen(port, () => console.log(`Example app listening on port ${port}`));

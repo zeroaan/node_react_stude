@@ -10,7 +10,7 @@ function App() {
     <>
       <Router>
         <Switch>
-          <Route exact path="/" component={Auth(Home, null)} />
+          <Route exact path="/" component={Auth(Home, true)} />
           <Route exact path="/register" component={Auth(Register, false)} />
           <Route exact path="/login" component={Auth(Login, false)} />
           <Route path="/">
