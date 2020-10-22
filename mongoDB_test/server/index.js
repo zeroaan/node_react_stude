@@ -6,6 +6,7 @@ const config = require("./config/key");
 
 const { auth } = require("./middleware/auth");
 const { User } = require("./models/User");
+const { Post } = require("./models/Post");
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -97,6 +98,18 @@ app.get("/api/users/logout", auth, (req, res) => {
       });
     }
   );
+});
+
+app.post("/api/posts/post", (req, res) => {
+  const post = new Post(req.body);
+  post.save((err, postInfo) => {
+    if (err) {
+      return res.json({ postSuccess: false, err });
+    }
+    return res.status(200).json({
+      postSuccess: true,
+    });
+  });
 });
 
 const port = 5000;
