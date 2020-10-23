@@ -10,3 +10,10 @@ export function addPost(body) {
     payload: request,
   };
 }
+export function readPost() {
+  const request = axios.get("/api/posts").then((response) => response.data);
+  return {
+    type: types.READ_POST,
+    payload: request,
+  };
+}

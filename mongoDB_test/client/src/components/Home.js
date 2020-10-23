@@ -36,6 +36,8 @@ const Home = (props) => {
         alert("글쓰기 실패");
       }
     });
+    setTitle("");
+    setDesc("");
   };
   const onchangeInput = (e) => {
     const { value, name } = e.target;
@@ -46,12 +48,13 @@ const Home = (props) => {
     }
   };
   useEffect(() => {
-    axios
-      .get("/api/posts")
-      .then((response) => response.data)
-      .then((result) => {
-        setPosts(result.posts);
-      });
+    dispatch(actions.readPost()).then((response) =>
+      setPosts(response.payload.posts.reverse())
+    );
+    return () => {
+      setPosts([]);
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -65,6 +68,7 @@ const Home = (props) => {
           name="title"
           value={title}
           onChange={onchangeInput}
+          autoFocus
         />
 
         <label htmlFor="desc">내용</label>

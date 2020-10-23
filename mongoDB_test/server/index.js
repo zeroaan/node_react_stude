@@ -114,9 +114,10 @@ app.post("/api/posts/post", (req, res) => {
 app.get("/api/posts", (req, res) => {
   Post.find(function (err, posts) {
     if (err) {
-      return res.json({ postSuccess: false, err });
+      return res.json({ postReadSuccess: false, err });
     }
     return res.status(200).json({
+      postReadSuccess: true,
       posts,
     });
   });
