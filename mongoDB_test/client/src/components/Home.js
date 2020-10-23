@@ -8,6 +8,7 @@ const Home = (props) => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [posts, setPosts] = useState([]);
+  const [readLoad, setReadLoad] = useState(false);
 
   const user = useSelector((state) => state.user.userData);
 
@@ -21,12 +22,17 @@ const Home = (props) => {
     });
   };
   const onSubmitForm = (e) => {
+    setReadLoad(!readLoad);
     e.preventDefault();
+    if (title === "" || desc === "") {
+      return alert("제목, 내용을 입력하세요.");
+    }
     const body = {
       title: title,
       desc: desc,
       auth: user.name,
       authId: user._id,
+      date: new Date(),
     };
     dispatch(actions.addPost(body)).then((response) => {
       if (response.payload.postSuccess) {
@@ -48,14 +54,24 @@ const Home = (props) => {
     }
   };
   useEffect(() => {
-    dispatch(actions.readPost()).then((response) =>
-      setPosts(response.payload.posts.reverse())
-    );
-    return () => {
-      setPosts([]);
-    };
+    dispatch(actions.readPost()).then((response) => {
+      if (user === undefined) {
+        setReadLoad(!readLoad);
+        return null;
+      }
+      let board = [];
+      let i = 0;
+      while (i < response.payload.posts.length) {
+        if (user._id === response.payload.posts[i].authId) {
+          board = [response.payload.posts[i], ...board];
+        }
+        i = i + 1;
+      }
+      setPosts(board);
+    });
+    return () => setReadLoad(!readLoad);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [readLoad]);
 
   return (
     <>
@@ -81,6 +97,7 @@ const Home = (props) => {
           <h2>{post.title}</h2>
           <h4>{post.desc}</h4>
           <h5>{post.auth}</h5>
+          <p>{post.date}</p>
           <hr />
         </div>
       ))}
