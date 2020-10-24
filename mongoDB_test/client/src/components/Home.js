@@ -11,6 +11,7 @@ const Home = (props) => {
   const [readLoad, setReadLoad] = useState(false);
 
   const user = useSelector((state) => state.user.userData);
+  const post = useSelector((state) => state.post);
 
   const onClickLogout = () => {
     axios.get("/api/users/logout").then((response) => {
@@ -53,6 +54,7 @@ const Home = (props) => {
       setDesc(value);
     }
   };
+
   useEffect(() => {
     dispatch(actions.readPost()).then((response) => {
       if (user === undefined) {
