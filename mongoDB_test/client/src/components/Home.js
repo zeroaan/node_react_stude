@@ -8,10 +8,10 @@ const Home = (props) => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
   const [posts, setPosts] = useState([]);
-  const [readLoad, setReadLoad] = useState(false);
 
   const user = useSelector((state) => state.user.userData);
-  const post = useSelector((state) => state.post);
+  const post = useSelector((state) => state.post.posts);
+  console.log(user);
 
   const onClickLogout = () => {
     axios.get("/api/users/logout").then((response) => {
@@ -23,7 +23,6 @@ const Home = (props) => {
     });
   };
   const onSubmitForm = (e) => {
-    setReadLoad(!readLoad);
     e.preventDefault();
     if (title === "" || desc === "") {
       return alert("제목, 내용을 입력하세요.");
@@ -57,10 +56,6 @@ const Home = (props) => {
 
   useEffect(() => {
     dispatch(actions.readPost()).then((response) => {
-      if (user === undefined) {
-        setReadLoad(!readLoad);
-        return null;
-      }
       let board = [];
       let i = 0;
       while (i < response.payload.posts.length) {
@@ -71,9 +66,8 @@ const Home = (props) => {
       }
       setPosts(board);
     });
-    return () => setReadLoad(!readLoad);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [readLoad]);
+  }, [post]);
 
   return (
     <>

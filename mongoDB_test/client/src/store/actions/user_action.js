@@ -22,8 +22,8 @@ export function loginUser(body) {
   };
 }
 
-export function auth() {
-  const request = axios
+export async function auth() {
+  const request = await axios
     .get("/api/users/auth")
     .then((response) => response.data);
 

@@ -1,6 +1,16 @@
 import * as types from "../actions/types";
 
-export default function (state = {}, action) {
+const initialState = {
+  userData: {
+    _id: null,
+    name: null,
+    email: null,
+    isAuth: null,
+    isAdmin: null,
+  },
+};
+
+export default function (state = initialState, action) {
   switch (action.type) {
     case types.REGISTER_USER:
       return { ...state, register: action.payload };
