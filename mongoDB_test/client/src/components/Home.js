@@ -10,8 +10,6 @@ const Home = (props) => {
   const [posts, setPosts] = useState([]);
 
   const user = useSelector((state) => state.user.userData);
-  const post = useSelector((state) => state.post.posts);
-  console.log(user);
 
   const onClickLogout = () => {
     axios.get("/api/users/logout").then((response) => {
@@ -67,7 +65,7 @@ const Home = (props) => {
       setPosts(board);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [post]);
+  }, [user]);
 
   return (
     <>
